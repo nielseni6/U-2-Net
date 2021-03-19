@@ -226,24 +226,26 @@ if __name__ == "__main__":
         imshow(torchvision.utils.make_grid(VisualizeImageGrayscale(class_sel.clone().detach().cpu()))) # class_sel = Binarize(pred)
         plt.axis('off')
         
-        fig.add_subplot(length, width, 3).set_title('Smoothgrad classification 1')
+        # Show attribution for all pixels correspoding to the object class
+        fig.add_subplot(length, width, 3).set_title('VanillaGrad classification 1') 
         vanilla_grad = vanilla_grad[0][0] + vanilla_grad[0][1] + vanilla_grad[0][2]
         imshow(torchvision.utils.make_grid(VisualizeImageGrayscale(vanilla_grad)))
         plt.axis('off')
         
-        fig.add_subplot(length, width, 4).set_title('Smoothgrad^2 classification 1')
+        fig.add_subplot(length, width, 4).set_title('VanillaGrad^2 classification 1')
         vanilla_grad_sq = vanilla_grad_sq[0][0] + vanilla_grad_sq[0][1] + vanilla_grad_sq[0][2]
 #        cmap = cm.jet_r(smoothgrad_sq.cpu().numpy())[...,None]#[...,0]+cm.jet_r(smoothgrad_sq)[...,1]+cm.jet_r(smoothgrad_sq)[...,2]+cm.jet_r(smoothgrad_sq)[...,3]
 #        smoothgrad_sq = torch.tensor(cmap[...,0])
         imshow(torchvision.utils.make_grid(VisualizeImageGrayscale(vanilla_grad_sq)))
         plt.axis('off')
         
-        fig.add_subplot(length, width, 5).set_title('Smoothgrad classification 0')
+        # Show attribution for all pixels correspoding to the background class
+        fig.add_subplot(length, width, 5).set_title('VanillaGrad classification 0')
         vanilla_grad_i = vanilla_grad_i[0][0] + vanilla_grad_i[0][1] + vanilla_grad_i[0][2]
         imshow(torchvision.utils.make_grid(VisualizeImageGrayscale(vanilla_grad_i)))
         plt.axis('off')
         
-        fig.add_subplot(length, width, 6).set_title('Smoothgrad^2 classification 0')
+        fig.add_subplot(length, width, 6).set_title('VanillaGrad^2 classification 0')
         vanilla_grad_sq_i = vanilla_grad_sq_i[0][0] + vanilla_grad_sq_i[0][1] + vanilla_grad_sq_i[0][2]
         imshow(torchvision.utils.make_grid(VisualizeImageGrayscale(vanilla_grad_sq_i)))
         plt.axis('off')
