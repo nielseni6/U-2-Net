@@ -51,10 +51,24 @@ def save_output(image_name,pred,d_dir):
 
     imo.save(d_dir+imidx+'.png')
 
-def main():
+#def returnGradPred(img):
+#    
+#    img.requires_grad_(True)
+#    pred = model(img)
+#    label = torch.tensor([int(torch.max(pred[0], 0)[1])])
+#    if (torch.cuda.is_available()):
+#        label = label.cuda()
+#    loss = criterion(pred, label)
+#    loss.backward()
+#    
+##    S_c = torch.max(pred[0].data, 0)[0]
+#    Sc_dx = img.grad
+#    
+#    return Sc_dx, pred
 
+if __name__ == "__main__":
     # --------- 1. get image path and name ---------
-    model_name='u2net'#u2netp
+    model_name='u2netp'#u2net
 
 
 
@@ -107,6 +121,13 @@ def main():
         # normalization
         pred = d1[:,0,:,:]
         pred = normPRED(pred)
+        
+        print(pred.shape)
+        #print(pred.shape[1])
+        #print(len(pred[:,0,0,0]))
+        #print(len(pred[0,0,:,0]))
+        #print(len(pred[0,0,0,:]))
+        #phi_c = sum(pred)/(pred.shape[1]*pred.shape[2])
 
         # save results to test_results folder
         if not os.path.exists(prediction_dir):
@@ -114,6 +135,3 @@ def main():
         save_output(img_name_list[i_test],pred,prediction_dir)
 
         del d1,d2,d3,d4,d5,d6,d7
-
-if __name__ == "__main__":
-    main()
