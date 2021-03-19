@@ -12,7 +12,7 @@ Forked from the code from the paper **U^2-Net (U square net)** published in Patt
 [Osmar R. Zaiane](http://webdocs.cs.ualberta.ca/~zaiane/) and <br/>
 [Martin Jagersand](https://webdocs.cs.ualberta.ca/~jag/).
 
-## Citation
+## Citation for original U^2-Net paper
 ```
 @InProceedings{Qin_2020_PR,
 title = {U2-Net: Going Deeper with Nested U-Structure for Salient Object Detection},
