@@ -19,7 +19,6 @@ from data_loader import ToTensorLab
 from data_loader import SalObjDataset
 
 from model import U2NET # full size version 173.6 MB
-from model import U2NETP # small version u2net 4.7 MB
 
 # normalize the predicted SOD probability map
 def normPRED(d):
@@ -51,30 +50,15 @@ def save_output(image_name,pred,d_dir):
 
     imo.save(d_dir+imidx+'.png')
 
-#def returnGradPred(img):
-#    
-#    img.requires_grad_(True)
-#    pred = model(img)
-#    label = torch.tensor([int(torch.max(pred[0], 0)[1])])
-#    if (torch.cuda.is_available()):
-#        label = label.cuda()
-#    loss = criterion(pred, label)
-#    loss.backward()
-#    
-##    S_c = torch.max(pred[0].data, 0)[0]
-#    Sc_dx = img.grad
-#    
-#    return Sc_dx, pred
+def main():
 
-if __name__ == "__main__":
     # --------- 1. get image path and name ---------
-    model_name='u2netp'#u2net
+    model_name='u2net'
 
 
-
-    image_dir = os.path.join(os.getcwd(), 'test_data', 'test_images')
-    prediction_dir = os.path.join(os.getcwd(), 'test_data', model_name + '_results' + os.sep)
-    model_dir = os.path.join(os.getcwd(), 'saved_models', model_name, model_name + '.pth')
+    image_dir = os.path.join(os.getcwd(), 'test_data', 'test_human_images')
+    prediction_dir = os.path.join(os.getcwd(), 'test_data', 'test_human_images' + '_results' + os.sep)
+    model_dir = os.path.join(os.getcwd(), 'saved_models', model_name+'_human_seg', model_name + '_human_seg.pth')
 
     img_name_list = glob.glob(image_dir + os.sep + '*')
     print(img_name_list)
@@ -95,9 +79,6 @@ if __name__ == "__main__":
     if(model_name=='u2net'):
         print("...load U2NET---173.6 MB")
         net = U2NET(3,1)
-    elif(model_name=='u2netp'):
-        print("...load U2NEP---4.7 MB")
-        net = U2NETP(3,1)
 
     if torch.cuda.is_available():
         net.load_state_dict(torch.load(model_dir))
@@ -124,13 +105,6 @@ if __name__ == "__main__":
         # normalization
         pred = d1[:,0,:,:]
         pred = normPRED(pred)
-        
-        print(pred.shape)
-        #print(pred.shape[1])
-        #print(len(pred[:,0,0,0]))
-        #print(len(pred[0,0,:,0]))
-        #print(len(pred[0,0,0,:]))
-        #phi_c = sum(pred)/(pred.shape[1]*pred.shape[2])
 
         # save results to test_results folder
         if not os.path.exists(prediction_dir):
@@ -138,3 +112,6 @@ if __name__ == "__main__":
         save_output(img_name_list[i_test],pred,prediction_dir)
 
         del d1,d2,d3,d4,d5,d6,d7
+
+if __name__ == "__main__":
+    main()
